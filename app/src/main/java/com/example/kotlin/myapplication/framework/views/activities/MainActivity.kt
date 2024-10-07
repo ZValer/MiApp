@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.kotlin.myapplication.R
 import com.example.kotlin.myapplication.framework.viewmodel.MainViewModel
-import com.example.kotlin.myapplication.framework.views.fragments.MovieFragment
+import com.example.kotlin.myapplication.framework.views.fragments.DragonballFragment
 import com.example.kotlin.myapplication.framework.views.fragments.SearchFragment
 import com.example.kotlin.myapplication.framework.views.fragments.TareasFragment
 import com.example.kotlin.myapplication.utilities.Constants
@@ -31,7 +31,7 @@ class MainActivity: AppCompatActivity() {
         initializeListeners()
 
         // Establece el fragmento inicial en la actividad como el 'MovieFragment'
-        exchangeCurrentFragment(MovieFragment(), Constants.MENU_MOVIE)
+        exchangeCurrentFragment(DragonballFragment(), Constants.MENU_MOVIE)
     }
 
     // Método para inicializar el binding con el layout de la actividad
@@ -81,7 +81,7 @@ class MainActivity: AppCompatActivity() {
         }
 
         when (menuOption) {
-            Constants.MENU_MOVIE -> exchangeCurrentFragment(MovieFragment(), Constants.MENU_MOVIE)
+            Constants.MENU_MOVIE -> exchangeCurrentFragment(DragonballFragment(), Constants.MENU_MOVIE)
             Constants.MENU_SEARCH -> exchangeCurrentFragment(SearchFragment(), Constants.MENU_SEARCH)
             Constants.MENU_TAREAS -> exchangeCurrentFragment(TareasFragment(), Constants.MENU_TAREAS)
         }

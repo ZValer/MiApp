@@ -1,11 +1,11 @@
 package com.example.kotlin.myapplication.data.network
 
-import com.example.kotlin.myapplication.data.network.model.MovieObject
+import com.example.kotlin.myapplication.data.network.model.DragonballObject
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query
 
-interface MovieAPIService {
+interface DragonballAPIService {
     // Ejemplo de endpoint: https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc
     @GET("discover/movie")
     @Headers(
@@ -18,5 +18,5 @@ interface MovieAPIService {
         @Query("language") language: String,
         @Query("page") page: Int,
         @Query("sort_by") sortBy: String
-    ): MovieObject
+    ): DragonballObject
 }

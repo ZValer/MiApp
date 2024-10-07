@@ -6,19 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kotlin.myapplication.data.network.model.MovieBase
+import com.example.kotlin.myapplication.data.network.model.DragonballBase
 import com.example.kotlin.myapplication.databinding.FragmentMovieBinding
-import com.example.kotlin.myapplication.framework.adapter.MovieAdapter
-import com.example.kotlin.myapplication.framework.viewmodel.MovieViewModel
+import com.example.kotlin.myapplication.framework.adapter.DragonballAdapter
+import com.example.kotlin.myapplication.framework.viewmodel.DragonballViewModel
 import androidx.fragment.app.viewModels
 
-class MovieFragment : Fragment() {
+class DragonballFragment : Fragment() {
 
     private var _binding: FragmentMovieBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MovieViewModel by viewModels()
-    private lateinit var adapter: MovieAdapter
+    private val viewModel: DragonballViewModel by viewModels()
+    private lateinit var adapter: DragonballAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +47,7 @@ class MovieFragment : Fragment() {
         }
     }
 
-    private fun setUpRecyclerView(movies: List<MovieBase>) {
+    private fun setUpRecyclerView(movies: List<DragonballBase>) {
         // Configurar el RecyclerView
         binding.RVMovies.setHasFixedSize(true)
         binding.RVMovies.layoutManager = LinearLayoutManager(
@@ -57,7 +57,7 @@ class MovieFragment : Fragment() {
         )
 
         // Inicializar el adaptador y asignar la lista de películas
-        adapter = MovieAdapter(movies, requireContext())
+        adapter = DragonballAdapter(movies, requireContext())
         binding.RVMovies.adapter = adapter
     }
 

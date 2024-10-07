@@ -1,14 +1,13 @@
 package com.example.kotlin.myapplication.data.network
 
-import com.example.kotlin.myapplication.data.network.model.MovieBase
-import com.example.kotlin.myapplication.data.network.model.MovieObject
+import com.example.kotlin.myapplication.data.network.model.DragonballObject
 
-class MovieAPIClient {
-    private lateinit var api: MovieAPIService
+class DragonballAPIClient {
+    private lateinit var api: DragonballAPIService
 
-    suspend fun getMovieList(includeAdult: Boolean, includeVideo: Boolean, page: Int, sortBy: String): MovieObject? { // Return nullable MovieObject
+    suspend fun getMovieList(includeAdult: Boolean, includeVideo: Boolean, page: Int, sortBy: String): DragonballObject? { // Return nullable MovieObject
         // Inicializa el PokemonAPIService utilizando el NetworkModuleDI, que configura la instancia de Retrofit.
-        api = MovieNetworkModuleDI()
+        api = DragonballNetworkModuleDI()
 
         return try {
             api.getMovieList(
