@@ -8,5 +8,5 @@ import com.example.kotlin.myapplication.data.network.model.MovieObject
 class MovieListRequirement {
     private val repository = MovieRepository()
 
-    suspend operator fun invoke( limit: Int ): MovieObject? = repository.getMovieList(limit)
+    suspend operator fun invoke(includeAdult: Boolean, includeVideo: Boolean, page: Int, sortBy: String) = repository.getMovieList(includeAdult, includeVideo, page, sortBy)
 }

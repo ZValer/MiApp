@@ -6,24 +6,18 @@ import com.example.kotlin.myapplication.data.network.model.MovieObject
 class MovieAPIClient {
     private lateinit var api: MovieAPIService
 
-    suspend fun getMovieList(limit: Int): MovieObject? {
+    suspend fun getMovieList(includeAdult: Boolean, includeVideo: Boolean, page: Int, sortBy: String): MovieObject? { // Return nullable MovieObject
         // Inicializa el PokemonAPIService utilizando el NetworkModuleDI, que configura la instancia de Retrofit.
         api = MovieNetworkModuleDI()
 
         return try {
-            api.getMovieList(limit)
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    suspend fun getMovieInfo(numberMovie: Int): MovieBase? {
-        api = MovieNetworkModuleDI()
-
-        return try {
-            // Llamar al método del servicio de la API para obtener información sobre un Pokémon específico.
-            api.getMovieInfo(numberMovie)
+            api.getMovieList(
+                includeAdult = false,
+                includeVideo = false,
+                language = "en-US",
+                page = 1,
+                sortBy = "popularity.desc"
+            )
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
             null

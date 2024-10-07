@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 // https://api.themoviedb.org/3/find/{external_id}
 
-data class MovieBase(
+data class MovieBase (
     @SerializedName("id") val id: Int,
     @SerializedName("title") val title: String,
-    @SerializedName("release_date") val releaseDate: String,  // Using camelCase for Kotlin property
-    @SerializedName("poster_path") val url: String,  // Using camelCase for Kotlin property
-    @SerializedName("vote_average") val voteAverage: Float  // Using camelCase for Kotlin property
+    @SerializedName("overview") val overview: String,
+    @SerializedName("release_date") val release_date: String,
+    @SerializedName("poster_path") val poster_path: String
 )
