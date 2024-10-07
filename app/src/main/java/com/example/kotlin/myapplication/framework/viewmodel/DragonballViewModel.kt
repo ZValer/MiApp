@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 class DragonballViewModel : ViewModel() {
 
     val charactersList = MutableLiveData<List<DragonballBase>?>()
+    private val filteredCharactersList = MutableLiveData<List<DragonballBase>?>() // Nueva lista filtrada
 
     private val dragonballListRequirement = DragonballListRequirement()
 
@@ -24,17 +25,35 @@ class DragonballViewModel : ViewModel() {
                 val result = dragonballListRequirement()
                 if (result != null && result.items != null) {
                     charactersList.postValue(result.items)
+                    filteredCharactersList.postValue(result.items) // Inicializa la lista filtrada
                 } else {
                     Log.e("DragonballViewModel", "Error: No data received or items list is null")
                     Log.d("DragonballViewModelresults", "Response: $result")
-                    charactersList.postValue(emptyList()) // Enviar lista vacía si no hay datos
+                    charactersList.postValue(emptyList())
+                    filteredCharactersList.postValue(emptyList())
                 }
             } catch (e: Exception) {
                 Log.e("DragonballViewModel", "Exception: ${e.message}")
-                charactersList.postValue(emptyList()) // En caso de excepción, enviar lista vacía
+                charactersList.postValue(emptyList())
+                filteredCharactersList.postValue(emptyList())
             }
         }
     }
+
+    // Método para buscar personajes
+    fun searchCharacters(query: String) {
+        val originalList = charactersList.value ?: return // Obtener la lista original
+        if (query.isEmpty()) {
+            filteredCharactersList.postValue(originalList) // Si la búsqueda está vacía, mostrar todos
+        } else {
+            val filteredList = originalList.filter {
+                it.name.contains(query, ignoreCase = true) // Filtrar por nombre
+            }
+            filteredCharactersList.postValue(filteredList) // Actualiza la lista filtrada
+        }
+    }
+
+    fun getFilteredCharacters(): MutableLiveData<List<DragonballBase>?> {
+        return filteredCharactersList
+    }
 }
-
-

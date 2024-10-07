@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.myapplication.data.network.model.DragonballBase
@@ -34,7 +35,8 @@ class DragonballFragment : Fragment() {
 
         // Inicializar el RecyclerView
         binding.RVDragonball.layoutManager = LinearLayoutManager(requireContext())
-        viewModel.charactersList.observe(viewLifecycleOwner) { charactersList ->
+
+        viewModel.getFilteredCharacters().observe(viewLifecycleOwner) { charactersList ->
             charactersList?.let {
                 setUpRecyclerView(it) // Llamar al método para configurar el RecyclerView
             }
@@ -42,6 +44,11 @@ class DragonballFragment : Fragment() {
 
         // Obtener los personajes a través del ViewModel
         viewModel.getCharacters()
+
+        // Configurar el EditText para buscar personajes
+        binding.searchCharacter.addTextChangedListener { text ->
+            viewModel.searchCharacters(text.toString()) // Llamar al método de búsqueda
+        }
     }
 
     private fun setUpRecyclerView(characters: List<DragonballBase>) {
