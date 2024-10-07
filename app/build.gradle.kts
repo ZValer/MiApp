@@ -47,6 +47,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.1")
+
     //Retrofit is used for network calls, with a Gson converter to parse JSON responses from a web API into Java/Kotlin objects
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")

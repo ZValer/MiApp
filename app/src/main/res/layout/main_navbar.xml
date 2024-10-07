@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         android:layout_weight="0.33"
         android:orientation="vertical"
-        android:id="@+id/llPokedex"
+        android:id="@+id/llMovie"
         android:layout_gravity="center"
         android:gravity="center"
         >
@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pokedex"
+            android:text="Movie"
             android:textColor="@color/semiWhite"
             android:textStyle="bold"
             android:gravity="center"
