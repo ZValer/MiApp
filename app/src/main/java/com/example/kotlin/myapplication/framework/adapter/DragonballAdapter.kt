@@ -16,10 +16,9 @@ class DragonballAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<DragonballViewHolder>() {
 
-    // Método para actualizar la lista de personajes
-    fun updateData(newData: List<DragonballBase>) {
-        data = newData
-        notifyDataSetChanged() // Notificar cambios en los datos
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DragonballViewHolder {
+        val binding = ItemDragonballBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DragonballViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: DragonballViewHolder, position: Int) {
@@ -27,13 +26,14 @@ class DragonballAdapter(
         holder.bind(item, context) // Enlaza los datos del personaje a la vista
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DragonballViewHolder {
-        val binding = ItemDragonballBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return DragonballViewHolder(binding)
-    }
-
     override fun getItemCount(): Int {
         return data.size
+    }
+
+    // Método para actualizar la lista de personajes
+    fun updateList(newData: List<DragonballBase>) {
+        data = newData
+        notifyDataSetChanged() // Notifica que la lista ha cambiado y el RecyclerView debe actualizarse
     }
 }
 

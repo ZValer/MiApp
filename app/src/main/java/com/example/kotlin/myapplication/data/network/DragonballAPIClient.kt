@@ -6,19 +6,17 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class DragonballAPIClient {
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(Constants.BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private lateinit var api: DragonballAPIService
 
-    private val api: DragonballAPIService = retrofit.create(DragonballAPIService::class.java)
-
-    suspend fun getCharacters(page: Int? = null, limit: Int? = null): DragonballObject? {
-        return try {
-            api.getCharacters(page, limit)
+    suspend fun getCharacters(page: Int): DragonballObject? {
+        api = DragonballNetworkModuleDI()
+        return try{
+            api.getCharacters(
+                page = page,
+            )
         } catch (e: Exception) {
             e.printStackTrace()
-            null
+            null // Return null in case of an exception
         }
     }
 }

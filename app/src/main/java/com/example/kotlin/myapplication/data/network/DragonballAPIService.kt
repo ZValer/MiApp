@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface DragonballAPIService {
     @GET("characters")
     suspend fun getCharacters(
-        @Query("page") page: Int? = null,
-        @Query("limit") limit: Int? = null
+        @Query("page") page: Int? = null
     ): DragonballObject
 }
+
