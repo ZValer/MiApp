@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlin.myapplication.data.network.model.DragonballBase
-import com.example.kotlin.myapplication.databinding.FragmentMovieBinding
+import com.example.kotlin.myapplication.databinding.FragmentDragonballBinding
 import com.example.kotlin.myapplication.framework.adapter.DragonballAdapter
 import com.example.kotlin.myapplication.framework.viewmodel.DragonballViewModel
 import androidx.fragment.app.viewModels
 
 class DragonballFragment : Fragment() {
 
-    private var _binding: FragmentMovieBinding? = null
+    private var _binding: FragmentDragonballBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: DragonballViewModel by viewModels()
@@ -25,45 +25,33 @@ class DragonballFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflar el layout para este fragmento
-        _binding = FragmentMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentDragonballBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initializeObservers()
-
-        // Inicializar la lista de películas llamando al ViewModel
-        viewModel.getMovieList()
-    }
-
-    private fun initializeObservers() {
-        viewModel.movieList.observe(viewLifecycleOwner) { movieList ->
-            movieList?.let {
-                setUpRecyclerView(it.results)
+        // Inicializar el RecyclerView
+        binding.RVDragonball.layoutManager = LinearLayoutManager(requireContext())
+        viewModel.charactersList.observe(viewLifecycleOwner) { charactersList ->
+            charactersList?.let {
+                setUpRecyclerView(it) // Llamar al método para configurar el RecyclerView
             }
         }
+
+        // Obtener los personajes a través del ViewModel
+        viewModel.getCharacters()
     }
 
-    private fun setUpRecyclerView(movies: List<DragonballBase>) {
-        // Configurar el RecyclerView
-        binding.RVMovies.setHasFixedSize(true)
-        binding.RVMovies.layoutManager = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-
-        // Inicializar el adaptador y asignar la lista de películas
-        adapter = DragonballAdapter(movies, requireContext())
-        binding.RVMovies.adapter = adapter
+    private fun setUpRecyclerView(characters: List<DragonballBase>) {
+        adapter = DragonballAdapter(characters, requireContext())
+        binding.RVDragonball.adapter = adapter
     }
 
-    // Método que se llama cuando la vista se destruye
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Limpia el binding para evitar fugas de memoria
+        _binding = null
     }
 }
+

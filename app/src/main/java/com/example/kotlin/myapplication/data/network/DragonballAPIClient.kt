@@ -1,23 +1,22 @@
 package com.example.kotlin.myapplication.data.network
 
 import com.example.kotlin.myapplication.data.network.model.DragonballObject
+import com.example.kotlin.myapplication.utilities.Constants
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class DragonballAPIClient {
-    private lateinit var api: DragonballAPIService
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(Constants.BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 
-    suspend fun getMovieList(includeAdult: Boolean, includeVideo: Boolean, page: Int, sortBy: String): DragonballObject? { // Return nullable MovieObject
-        // Inicializa el PokemonAPIService utilizando el NetworkModuleDI, que configura la instancia de Retrofit.
-        api = DragonballNetworkModuleDI()
+    private val api: DragonballAPIService = retrofit.create(DragonballAPIService::class.java)
 
+    suspend fun getCharacters(page: Int? = null, limit: Int? = null): DragonballObject? {
         return try {
-            api.getMovieList(
-                includeAdult = false,
-                includeVideo = false,
-                language = "en-US",
-                page = 1,
-                sortBy = "popularity.desc"
-            )
-        } catch (e: java.lang.Exception) {
+            api.getCharacters(page, limit)
+        } catch (e: Exception) {
             e.printStackTrace()
             null
         }

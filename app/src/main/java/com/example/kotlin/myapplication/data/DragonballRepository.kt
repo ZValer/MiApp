@@ -6,5 +6,5 @@ import com.example.kotlin.myapplication.data.network.DragonballAPIClient
 class DragonballRepository {
     private val api = DragonballAPIClient()
 
-    suspend fun getMovieList(includeAdult: Boolean, includeVideo: Boolean, page: Int, sortBy: String) = api.getMovieList(includeAdult, includeVideo, page, sortBy)
+    suspend fun getCharacters() = api.getCharacters()
 }
