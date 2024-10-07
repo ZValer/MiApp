@@ -49,6 +49,15 @@ class DragonballFragment : Fragment() {
         binding.searchCharacter.addTextChangedListener { text ->
             viewModel.searchCharacters(text.toString()) // Llamar al método de búsqueda
         }
+
+        // Configurar botones para filtrar por género
+        binding.btnHombres.setOnClickListener {
+            viewModel.filterByGender("Male") // Filtrar por personajes masculinos
+        }
+
+        binding.btnMujeres.setOnClickListener {
+            viewModel.filterByGender("Female") // Filtrar por personajes femeninos
+        }
     }
 
     private fun setUpRecyclerView(characters: List<DragonballBase>) {
@@ -61,4 +70,3 @@ class DragonballFragment : Fragment() {
         _binding = null
     }
 }
-
