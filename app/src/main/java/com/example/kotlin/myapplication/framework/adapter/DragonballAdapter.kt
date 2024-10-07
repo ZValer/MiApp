@@ -31,10 +31,11 @@ class DragonballAdapter(
     }
 
     // Método para actualizar la lista de personajes
-    fun updateList(newData: List<DragonballBase>) {
+    fun updateData(newData: List<DragonballBase>) {
         data = newData
-        notifyDataSetChanged() // Notifica que la lista ha cambiado y el RecyclerView debe actualizarse
+        notifyDataSetChanged() // Notificar cambios
     }
 }
+
 
 

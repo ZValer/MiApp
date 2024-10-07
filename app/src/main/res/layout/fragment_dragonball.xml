@@ -11,20 +11,17 @@
         android:id="@+id/texto_lista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dragonball Characters"
+        android:text="Personajes de Dragonball"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
-    <!-- EditText para buscar personajes, debajo del título -->
-    <EditText
-        android:id="@+id/search_character"
-        android:layout_width="0dp"
+    <Spinner
+        android:id="@+id/race_spinner"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Buscar personaje"
         app:layout_constraintTop_toBottomOf="@id/texto_lista"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,37 +29,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"/>
 
-    <!-- Botón de Hombres -->
-    <Button
-        android:id="@+id/btnHombres"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Hombres"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toBottomOf="@id/search_character"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnMujeres"
-        app:layout_constraintHorizontal_bias="0.5"/>
-
-    <!-- Botón de Mujeres -->
-    <Button
-        android:id="@+id/btnMujeres"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Mujeres"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toBottomOf="@id/search_character"
-        app:layout_constraintStart_toEndOf="@id/btnHombres"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        android:layout_marginStart="8dp"/>
 
     <!-- RecyclerView para mostrar la lista de personajes -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/RVDragonball"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/btnHombres"
+        app:layout_constraintTop_toBottomOf="@id/race_spinner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

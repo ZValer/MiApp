@@ -12,6 +12,7 @@ class DragonballViewHolder(private val binding: ItemDragonballBinding) : Recycle
     fun bind(item: DragonballBase, context: Context) {
         binding.TVTitle.text = item.name // Asigna el nombre del personaje
         binding.TVDescription.text = item.description // Asigna la descripción
+        binding.TVRace.text = item.race
 
         // Cargar la imagen del personaje usando Glide
         Glide.with(context)

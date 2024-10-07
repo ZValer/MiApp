@@ -1,9 +1,12 @@
 package com.example.kotlin.myapplication.framework.views.fragments
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +30,6 @@ class DragonballFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflar el layout para este fragmento
         _binding = FragmentDragonballBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -35,26 +37,16 @@ class DragonballFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Inicializa el RecyclerView
+        setUpRecyclerView()
+
+        // Inicializa los observadores
         initializeObservers()
 
-        // Inicializar la lista de personajes llamando al ViewModel
+        // Obtener la lista inicial de personajes
         viewModel.getDragonballList()
 
-        // Configurar el EditText para buscar personajes
-        binding.searchCharacter.addTextChangedListener { text ->
-            viewModel.searchCharacters(text.toString()) // Llamar al método de búsqueda
-        }
-
-        // Configurar botones para filtrar por género
-        binding.btnHombres.setOnClickListener {
-            viewModel.filterByGender("Male") // Filtrar por personajes masculinos
-        }
-
-        binding.btnMujeres.setOnClickListener {
-            viewModel.filterByGender("Female") // Filtrar por personajes femeninos
-        }
-
-        // Configurar el ScrollListener para cargar más personajes
+        // Configurar el ScrollListener para cargar más personajes al hacer scroll
         binding.RVDragonball.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -63,39 +55,56 @@ class DragonballFragment : Fragment() {
                 }
             }
         })
-    }
 
-    private fun initializeObservers() {
-        viewModel.movieList.observe(viewLifecycleOwner) { movieList ->
-            movieList?.let {
-                setUpRecyclerView(it) // Configurar el RecyclerView con la lista de personajes
+        // Configurar el Spinner (Dropdown) para filtrar por raza
+        val races = listOf("Todos", "Saiyan", "Namekian", "Human", "Android") // Agrega las razas necesarias
+        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, races)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.raceSpinner.adapter = spinnerAdapter
+
+        // Configurar el listener del Spinner
+        binding.raceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedRace = if (position == 0) null else races[position]
+                viewModel.selectedRace = selectedRace
+                viewModel.filterCharacters(selectedRace)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                viewModel.selectedRace = null
+                viewModel.filterCharacters(null)
             }
         }
-
-        viewModel.getFilteredMovieList().observe(viewLifecycleOwner) { filteredList ->
-            filteredList?.let {
-                adapter.updateList(it) // Actualiza la lista del adaptador con los datos filtrados
-            }
-        }
     }
 
-    private fun setUpRecyclerView(movies: List<DragonballBase>) {
+    private fun setUpRecyclerView() {
         // Configurar el RecyclerView
         binding.RVDragonball.setHasFixedSize(true)
-        binding.RVDragonball.layoutManager = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+        binding.RVDragonball.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        // Inicializar el adaptador y asignar la lista de personajes
-        adapter = DragonballAdapter(movies, requireContext())
+        // Inicializar el adaptador
+        adapter = DragonballAdapter(emptyList(), requireContext())
         binding.RVDragonball.adapter = adapter
     }
 
-    // Método que se llama cuando la vista se destruye
+    private fun initializeObservers() {
+        // Observador de la lista filtrada
+        viewModel.filteredMovieList.observe(viewLifecycleOwner) { movieList ->
+            movieList?.let {
+                adapter.updateData(it) // Actualiza los datos del adaptador
+            }
+        }
+
+        // Observador de la lista completa
+        viewModel.movieList.observe(viewLifecycleOwner) { movieList ->
+            movieList?.let {
+                viewModel.filterCharacters(viewModel.selectedRace) // Filtrar personajes según la raza seleccionada
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null // Limpia el binding para evitar fugas de memoria
+        _binding = null
     }
 }

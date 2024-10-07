@@ -31,6 +31,15 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/TVRace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Race"
+            android:textSize="14sp" />
+
+        <TextView
             android:id="@+id/TVDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
